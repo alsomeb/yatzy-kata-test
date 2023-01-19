@@ -20,8 +20,30 @@ public class YatzyScorer {
 			case TWO_PAIR -> totalScore = twoPair(rollResultArray);
 			case FOUR_OF_A_KIND -> totalScore = calculateFourOfAKind(rollResultArray);
 			case FULL_HOUSE -> totalScore = calculateFullHouse(rollResultArray);
+			case SMALL_STRAIGHT, LARGE_STRAIGHT -> totalScore = calculateSmallLargeStraight(rollResultArray, category);
 		}
 		return totalScore;
+	}
+
+	private int calculateSmallLargeStraight(int[] rollResultArray, Category category) {
+		int score = 0;
+
+		// Vi Grupperar alla nummer i rollResultArray
+		Map<Integer, Long> numbers = Arrays.stream(rollResultArray)
+				.boxed()
+				.collect(Collectors.groupingBy(Function.identity(), Collectors.counting()));
+		// Om ej numbers map har 5 nycklar (5 tärningar), så fallerar allt, returnerar 0p
+		if(numbers.size() == 5) {
+			int straightSum = numbers.keySet().stream()
+					.reduce(0, (entryValue, nextValue) -> entryValue + nextValue);
+			// score = Ternary Operator
+			if (category.equals(Category.SMALL_STRAIGHT)) {
+				score = (straightSum == category.getVal()) ? category.getVal() : 0; // expected 15
+			} else if (category.equals(Category.LARGE_STRAIGHT)) {
+				score = (straightSum == category.getVal()) ? category.getVal() : 0; // expected 20
+			}
+		}
+		return score;
 	}
 
 	private int calculateFullHouse(int[] rollResultArray) {

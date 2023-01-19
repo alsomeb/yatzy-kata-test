@@ -341,7 +341,54 @@ public class YatzyTest {
 		int score2 = yatzyScorer.calculateScore(Category.FULL_HOUSE, new YatzyRoll(2,2,3,3,3));
 		assertNotEquals(4, score2);
 	}
-	
 
- // TODO Small straight, Large straight, Full house
+	@Test
+	public void smallStraightScoresCorrectly() {
+		// 1,2,3,4,5 scores SMALL STRAIGHT, 15
+		int score = yatzyScorer.calculateScore(Category.SMALL_STRAIGHT, new YatzyRoll(1,2,3,4,5));
+		assertEquals(15, score);
+
+		// 2,1,3,5,4 scores SMALL STRAIGHT, 15
+		int score2 = yatzyScorer.calculateScore(Category.SMALL_STRAIGHT, new YatzyRoll(2,1,3,5,4));
+		assertEquals(15, score2);
+
+	}
+
+	@Test
+	public void smallStraightScoresInCorrectly() {
+		// 2,3,4,5,6 scores 0 On small Straight 1, 2, 3, 4, 5
+		int score = yatzyScorer.calculateScore(Category.SMALL_STRAIGHT, new YatzyRoll(2,3,4,5,6));
+		assertEquals(0, score);
+		assertNotEquals(21, score);
+
+		// (2,2,2,4,5) scores !!NOT!! SMALL STRAIGHT, 15 p
+		int score2 = yatzyScorer.calculateScore(Category.SMALL_STRAIGHT, new YatzyRoll(2,2,2,4,5));
+		assertEquals(0, score2);
+	}
+
+	@Test
+	public void largeStraightScoresCorrectly() {
+		// 2,3,4,5,6,  scores LARGE STRAIGHT, 20
+		int score = yatzyScorer.calculateScore(Category.LARGE_STRAIGHT, new YatzyRoll(2,3,4,5,6));
+		assertEquals(20, score);
+
+		// 6,4,3,5,2  scores LARGE STRAIGHT, 20
+		int score2 = yatzyScorer.calculateScore(Category.LARGE_STRAIGHT, new YatzyRoll(6,4,3,5,2));
+		assertEquals(20, score2);
+
+	}
+
+	@Test
+	public void largeStraightScoresInCorrectly() {
+		// 1,2,3,4,5 scores 0 ( Large Straight )
+		int score = yatzyScorer.calculateScore(Category.LARGE_STRAIGHT, new YatzyRoll(1,2,3,4,5));
+		assertEquals(0, score);
+		assertNotEquals(15, score);
+
+		// (5,5,2,3,5) scores 0 ( Large Straight )
+		int score2 = yatzyScorer.calculateScore(Category.LARGE_STRAIGHT, new YatzyRoll(5,5,2,3,5));
+		assertNotEquals(20, score2);
+		assertEquals(0, score2);
+	}
+
 }

@@ -14,7 +14,9 @@ public enum Category {
 	THREE_KIND(0),
 	TWO_PAIR(0),
 	FOUR_OF_A_KIND(0),
-	FULL_HOUSE(0);
+	FULL_HOUSE(0),
+	SMALL_STRAIGHT(15),
+	LARGE_STRAIGHT(20);
 
 	private final int val;
 
