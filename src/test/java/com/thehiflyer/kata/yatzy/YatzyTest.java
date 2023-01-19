@@ -283,7 +283,65 @@ public class YatzyTest {
 		int score2 = yatzyScorer.calculateScore(Category.TWO_PAIR, new YatzyRoll(1, 1, 1, 3, 3));
 		assertNotEquals(9, score2);
 	}
+
+
+	@Test
+	public void fourOfAKindScoresCorrectly() {
+		//    2,2,2,2,5 scores 8 (2+2+2+2)
+		int score = yatzyScorer.calculateScore(Category.FOUR_OF_A_KIND, new YatzyRoll(2,2,2,2,5));
+		assertEquals(8, score);
+
+		//    2,2,2,5,5 scores 0
+		int score1 = yatzyScorer.calculateScore(Category.FOUR_OF_A_KIND, new YatzyRoll(2,2,2,5,5));
+		assertEquals(0, score1);
+
+		//    2,2,2,2,2 scores 8 (2+2+2+2)
+		int score2 = yatzyScorer.calculateScore(Category.FOUR_OF_A_KIND, new YatzyRoll(2,2,2,2,2));
+		assertEquals(8, score2);
+	}
+
+
+	@Test
+	public void fourOfAKindScoresIncorrectly() {
+		// should NOT be 5
+		int score = yatzyScorer.calculateScore(Category.FOUR_OF_A_KIND, new YatzyRoll(2,2,2,2,5));
+		assertNotEquals(5, score);
+
+		// should NOT be 6
+		int score1 = yatzyScorer.calculateScore(Category.FOUR_OF_A_KIND, new YatzyRoll(2,2,2,5,5));
+		assertNotEquals(6, score1);
+
+		// should NOT be 10
+		int score2 = yatzyScorer.calculateScore(Category.FOUR_OF_A_KIND, new YatzyRoll(2,2,2,2,2));
+		assertNotEquals(10, score2);
+	}
+
+	@Test
+	public void fullHouseScoresCorrectly() {
+		// 1,1,2,2,2 scores 8 (1+1+2+2+2)
+		int score = yatzyScorer.calculateScore(Category.FULL_HOUSE, new YatzyRoll(1,1,2,2,2));
+		assertEquals(8, score);
+
+		// 2,2,3,3,4 scores 0
+		int score2 = yatzyScorer.calculateScore(Category.FULL_HOUSE, new YatzyRoll(2,2,3,3,4));
+		assertEquals(0, score2);
+
+		// 	4,4,4,4,4 scores 0
+		int score3 = yatzyScorer.calculateScore(Category.FULL_HOUSE, new YatzyRoll(4,4,4,4,4));
+		assertEquals(0, score3);
+	}
+
+	@Test
+	public void fullHouseScoresInCorrectly() {
+		// 1,1,2,2,2 scores NOT LIKE THREE OF A KIND
+		int score = yatzyScorer.calculateScore(Category.FULL_HOUSE, new YatzyRoll(1,1,2,2,2));
+		assertNotEquals(6, score);
+
+		// 2,2,3,3,4 not scores like 2 of a kind
+		int score2 = yatzyScorer.calculateScore(Category.FULL_HOUSE, new YatzyRoll(2,2,3,3,3));
+		assertNotEquals(4, score2);
+	}
 	
 
- // TODO Four of a kind, Small straight, Large straight, Full house
+ // TODO Small straight, Large straight, Full house
 }

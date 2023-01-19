@@ -12,7 +12,9 @@ public enum Category {
 	SIXES(6),
 	PAIR(0),
 	THREE_KIND(0),
-	TWO_PAIR(0);
+	TWO_PAIR(0),
+	FOUR_OF_A_KIND(0),
+	FULL_HOUSE(0);
 
 	private final int val;
 
